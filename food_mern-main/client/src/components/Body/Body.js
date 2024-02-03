@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import data from '../../../src/data.json';
-
+import { useNavigate } from 'react-router-dom';
 import Navbar from './NavBar';
 
 const Body = () => {
@@ -8,6 +8,19 @@ const Body = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [isCartOpen, setCartOpen] = useState(false);
   const [totalBill, setTotalBill] = useState(0);
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  const navigate = useNavigate();
+
+  // Check login status on component mount
+  useEffect(() => {
+    if (!isLoggedIn) {
+      // Redirect to login page
+      navigate('/');
+    }
+  }, [isLoggedIn, navigate]);
+
+
+
 
   const addToCart = (item) => {
     setCount(count + 1);
