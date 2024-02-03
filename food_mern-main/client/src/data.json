@@ -1,0 +1,65 @@
+[
+  {
+    "albumId": 1,
+    "id": 1,
+    "description":"Food is essential for nourishing the body, offering a mix of flavors and textures that contribute to both physical well-being and cultural enjoyment.",
+    "title": "food1",
+    "image": "./food1.jpg"
+  },
+  {
+    "albumId": 1,
+    "id": 2,
+    "description":"Food is essential for nourishing the body, offering a mix of flavors and textures that contribute to both physical well-being and cultural enjoyment.",
+    "title": "food2",
+    "image": "./food2.jpg"
+  },
+  {
+    "albumId": 1,
+    "id": 3,
+    "description":"Food is essential for nourishing the body, offering a mix of flavors and textures that contribute to both physical well-being and cultural enjoyment.",
+    "title": "food3",
+    "image": "./food3.jpg"
+  },
+  {
+    "albumId": 1,
+    "id": 4,
+    "description":"Food is essential for nourishing the body, offering a mix of flavors and textures that contribute to both physical well-being and cultural enjoyment.",
+    "title": "food4",
+    "image": "./food4.jpg"
+  },
+  {
+    "albumId": 1,
+    "id": 5,
+    "description":"Food is essential for nourishing the body, offering a mix of flavors and textures that contribute to both physical well-being and cultural enjoyment.",
+    "title": "food5",
+    "image": "./food5.jpg"
+  },
+  {
+    "albumId": 1,
+    "id": 6,
+    "description":"Food is essential for nourishing the body, offering a mix of flavors and textures that contribute to both physical well-being and cultural enjoyment.",
+    "title": "food6",
+    "image": "./food6.jpg"
+  },
+  {
+    "albumId": 1,
+    "id": 7,
+    "description":"Food is essential for nourishing the body, offering a mix of flavors and textures that contribute to both physical well-being and cultural enjoyment.",
+    "title": "food7",
+    "image": "./food7.jpg"
+  },
+  {
+    "albumId": 1,
+    "id": 8,
+    "description":"Food is essential for nourishing the body, offering a mix of flavors and textures that contribute to both physical well-being and cultural enjoyment.",
+    "title": "food8",
+    "image": "./food8.jpg"
+  },
+  {
+    "albumId": 1,
+    "id": 9,
+    "description":"Food is essential for nourishing the body, offering a mix of flavors and textures that contribute to both physical well-being and cultural enjoyment.",
+    "title": "food9",
+    "image": "./food8.jpg"
+  }
+]
