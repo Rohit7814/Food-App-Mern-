@@ -23,7 +23,7 @@ const razorpay = new Razorpay({
 
 app.post('/api/payment', async (req, res) => {
   const { amount, currency, orderId } = req.body;
-  console.log('Received Data:', { amount, currency, orderId });
+  
 
   const options = {
     amount: amount * 100,
