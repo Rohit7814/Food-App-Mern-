@@ -2,24 +2,23 @@ import React, { useState,useEffect } from 'react';
 import data from '../../../src/data.json';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './NavBar';
-
+import PaymentComponent from './Payment';
 
 const Body = () => {
   const [count, setCount] = useState(0);
   const [selectedItems, setSelectedItems] = useState([]);
   const [isCartOpen, setCartOpen] = useState(false);
-  const [totalBill, setTotalBill] = useState(0);
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  const [totalBill, setTotalBill] = useState(0);
   const navigate = useNavigate();
 
-  // Check login status on component mount
   useEffect(() => {
     if (!isLoggedIn) {
       // Redirect to login page
       navigate('/');
     }
   }, [isLoggedIn, navigate]);
-  
+
   const addToCart = (item) => {
     setCount(count + 1);
     const existingItem = selectedItems.find((selectedItem) => selectedItem.title === item.title);
@@ -41,7 +40,6 @@ const Body = () => {
       setSelectedItems([...selectedItems, { ...item, count: 1, totalPrice: price }]);
     }
 
-    // Update total bill
     setTotalBill(totalBill + price);
   };
 
@@ -70,7 +68,6 @@ const Body = () => {
         setSelectedItems(selectedItems.filter((selectedItem) => selectedItem.title !== item.title));
       }
 
-      // Update total bill
       setTotalBill(totalBill - price);
     }
   };
@@ -85,9 +82,8 @@ const Body = () => {
     setTotalBill(0);
     setSelectedItems([]);
     window.alert('Order Successful');
+    navigate('/final');
   };
-
-
 
   return (
     <div className="bg-gray-900 text-white min-h-screen">
@@ -109,19 +105,24 @@ const Body = () => {
                   />
 
                   <span>{item.description}</span>
-                  <span className=' text-red-500 text-center'>${item.price}</span>
+                  <span className="text-red-500 text-center">₹{item.price}</span>
 
                   <div className="flex flex-row items-center space-x-3 justify-center">
-                  <button
-                   className={`flex justify-center ${count === 0 ? 'bg-red-300 cursor-not-allowed' : 'bg-red-500 hover:bg-red-700'} text-white font-semibold py-2 px-7 rounded focus:outline-none focus:shadow-outline-red active:bg-red-800 transition-all duration-200`}
-                  onClick={() => removeFromCart(item)}
-                  disabled={count === 0}
-                  style={{ cursor: count === 0 ? 'not-allowed' : 'pointer' }}
-                  >
-                   -
-                  </button>
+                    <button
+                      className={`flex justify-center ${
+                        count === 0
+                          ? 'bg-red-300 cursor-not-allowed'
+                          : 'bg-red-500 hover:bg-red-700'
+                      } text-white font-semibold py-2 px-7 rounded focus:outline-none focus:shadow-outline-red active:bg-red-800 transition-all duration-200`}
+                      onClick={() => removeFromCart(item)}
+                      disabled={count === 0}
+                      style={{ cursor: count === 0 ? 'not-allowed' : 'pointer' }}
+                    >
+                      -
+                    </button>
                     <span>
-                      {selectedItems.find((selectedItem) => selectedItem.title === item.title)?.count || 0}
+                      {selectedItems.find((selectedItem) => selectedItem.title === item.title)
+                        ?.count || 0}
                     </span>
                     <button
                       className="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-7 rounded focus:outline-none focus:shadow-outline-green active:bg-green-800 transition-all duration-200"
@@ -153,13 +154,14 @@ const Body = () => {
                 <p>No items in the cart.</p>
               )}
               <p className="mt-2">Total Bill: ${totalBill.toFixed(2)}</p>
-              <div className=' space-x-2'>
-              <button className="mt-4 bg-red-500 text-white py-2 px-4 rounded" onClick={toggleCart}>
-                Close Cart
-              </button>
-              <button className="mt-4 bg-red-500 text-white py-2 px-4 rounded" onClick={thankYou}>
-                Order Now
-              </button>
+              <div className="space-x-2">
+                <button
+                  className="mt-4 bg-red-500 text-white py-2 px-4 rounded"
+                  onClick={toggleCart}
+                >
+                  Close Cart
+                </button>
+                <PaymentComponent totalBill={totalBill} thankYou={thankYou} />
               </div>
             </div>
           </div>
