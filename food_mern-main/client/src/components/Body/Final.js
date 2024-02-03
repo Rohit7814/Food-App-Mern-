@@ -24,7 +24,7 @@ const Final = () => {
     };
 
     // Toggle animation class at regular intervals
-    const animationInterval = setInterval(toggleAnimation, 2000); // Adjust the interval as needed
+    const animationInterval = setInterval(toggleAnimation, 899); // Adjust the interval as needed
 
     // Clean up the interval to avoid memory leaks
     return () => clearInterval(animationInterval);
