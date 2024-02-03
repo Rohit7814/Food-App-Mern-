@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import './final.css'; // Import your CSS file
 import { useNavigate } from 'react-router-dom';
+import Navbar from './NavBar';
+
 const Final = () => {
   const [animationClass, setAnimationClass] = useState('');
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!isLoggedIn) {
       // Redirect to login page
       navigate('/');
     }
-  }, [isLoggedIn,navigate]);
-
-
+  }, [isLoggedIn, navigate]);
 
   useEffect(() => {
     // Function to toggle animation class
@@ -30,11 +30,13 @@ const Final = () => {
     return () => clearInterval(animationInterval);
   }, []);
 
+  
+
   return (
     <div className="bg-gray-900 text-white min-h-screen flex items-center justify-center">
+      <Navbar />
       <div className={`max-w-md p-8 bg-gray-800 rounded-md shadow-md ${animationClass}`}>
         <h1 className="text-3xl font-semibold mb-4">Thank You</h1>
-        {/* Your content here */}
       </div>
     </div>
   );
