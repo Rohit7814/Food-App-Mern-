@@ -19,10 +19,7 @@ const Body = () => {
       navigate('/');
     }
   }, [isLoggedIn, navigate]);
-
-
-
-
+  
   const addToCart = (item) => {
     setCount(count + 1);
     const existingItem = selectedItems.find((selectedItem) => selectedItem.title === item.title);
