@@ -3,6 +3,7 @@ import data from '../../../src/data.json';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './NavBar';
 
+
 const Body = () => {
   const [count, setCount] = useState(0);
   const [selectedItems, setSelectedItems] = useState([]);
@@ -83,8 +84,11 @@ const Body = () => {
 
   const thankYou = () => {
     setCartOpen(false);
+    setCount(0);
+    setTotalBill(0);
+    setSelectedItems([]);
     window.alert('Order Successful');
-  }
+  };
 
 
 
