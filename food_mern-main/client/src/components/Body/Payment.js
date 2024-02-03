@@ -20,7 +20,7 @@ const PaymentComponent = ({ totalBill, thankYou }) => {
     const totalBillInPaise = Math.round(totalBill * 100);
 
     const options = {
-      key: 'rzp_test_8IRBTUQQEjgjjQ',
+      key: 'add yours',
       amount: totalBillInPaise,
       currency: 'INR',
       name: 'Your Company Name',
