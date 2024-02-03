@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Register = () => {
   const [data, setData] = useState({ email: '', name: '', password: '' });
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
+ 
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -17,9 +16,8 @@ const Register = () => {
     try {
       const url = "http://localhost:8080/api/register/register";
       await axios.post(url, data);
-      navigate('/');
-      
-    } catch (error) {
+      window.location.href = '/';
+    }catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
         setError(error.response.data.error);
       } else {

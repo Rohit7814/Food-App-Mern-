@@ -25,22 +25,32 @@ const Login = () => {
     e.preventDefault();
     try {
       const url = "http://localhost:8080/api/login/login";
-      await axios.post(url, data);
+      const response = await axios.post(url, data);
   
-      // Assuming a successful login, store authentication status
+      // Assuming a successful login, store authentication status and name
       localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('token', response.data.token);
   
-      // Use window.location to force a full reload of the page
-      window.location.href = '/body';
+      // Check if the response contains the user's name
+      if (response.data && response.data.name) {
+        localStorage.setItem('name', response.data.name);
+        // console.log('Name stored in localStorage:', response.data.name);
+      } else {
+        console.error('Name not found in the response:', response.data);
+      }
+  
+      // Redirect to '/body'
+      navigate('/body');
     } catch (error) {
       if (error.response && error.response.status === 401) {
         setError('Invalid credentials.');
       } else {
-        console.log(error);
+        console.error(error);
         setError('An error occurred while processing your request. Please try again later.');
       }
     }
   };
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-cover bg-center">

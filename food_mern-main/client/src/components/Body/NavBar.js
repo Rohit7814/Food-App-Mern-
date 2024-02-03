@@ -7,20 +7,24 @@ const Navbar = ({ count, toggleCart }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    
     localStorage.removeItem('isLoggedIn');
-    
+    localStorage.removeItem('username'); // Remove the username on logout
     navigate('/', { replace: true });
   };
+
+  // Retrieve the logged-in username from localStorage
+  const loggedInUsername = localStorage.getItem('name');
 
   return (
     <nav className="flex-no-wrap fixed top-0 z-10 flex w-full items-center justify-between bg-gray-800 py-2 lg:flex-wrap lg:justify-start lg:py-4">
       
       <div className='flex items-center space-x-2 ml-6'>
+        {loggedInUsername && (
           <p className='flex items-center text-lg font-semibold text-red-500 animate__animated animate__flash animate__infinite'>
-            Rohit <FaSignature className='ml-1 text-red-500' size={22} />
+            {loggedInUsername} <FaSignature className='ml-1 text-red-500' size={22} />
           </p>
-        </div>
+        )}
+      </div>
       
       <div className="container mx-auto flex flex-row items-center justify-between lg:space-x-4">
         <h1 className="text-2xl font-semibold">Here is My Food App</h1>

@@ -7,23 +7,37 @@ const Body = () => {
   const [count, setCount] = useState(0);
   const [selectedItems, setSelectedItems] = useState([]);
   const [isCartOpen, setCartOpen] = useState(false);
+  const [totalBill, setTotalBill] = useState(0);
 
   const addToCart = (item) => {
     setCount(count + 1);
     const existingItem = selectedItems.find((selectedItem) => selectedItem.title === item.title);
 
+    const price = parseFloat(item.price || 0);
+
     if (existingItem) {
       const updatedItems = selectedItems.map((selectedItem) =>
-        selectedItem.title === item.title ? { ...selectedItem, count: selectedItem.count + 1 } : selectedItem
+        selectedItem.title === item.title
+          ? {
+              ...selectedItem,
+              count: selectedItem.count + 1,
+              totalPrice: selectedItem.totalPrice + price,
+            }
+          : selectedItem
       );
       setSelectedItems(updatedItems);
     } else {
-      setSelectedItems([...selectedItems, { ...item, count: 1 }]);
+      setSelectedItems([...selectedItems, { ...item, count: 1, totalPrice: price }]);
     }
+
+    // Update total bill
+    setTotalBill(totalBill + price);
   };
 
   const removeFromCart = (item) => {
     const existingItem = selectedItems.find((selectedItem) => selectedItem.title === item.title);
+
+    const price = parseFloat(item.price || 0);
 
     if (existingItem) {
       if (count > 0) {
@@ -32,12 +46,21 @@ const Body = () => {
 
       if (existingItem.count > 1) {
         const updatedItems = selectedItems.map((selectedItem) =>
-          selectedItem.title === item.title ? { ...selectedItem, count: selectedItem.count - 1 } : selectedItem
+          selectedItem.title === item.title
+            ? {
+                ...selectedItem,
+                count: selectedItem.count - 1,
+                totalPrice: selectedItem.totalPrice - price,
+              }
+            : selectedItem
         );
         setSelectedItems(updatedItems);
       } else {
         setSelectedItems(selectedItems.filter((selectedItem) => selectedItem.title !== item.title));
       }
+
+      // Update total bill
+      setTotalBill(totalBill - price);
     }
   };
 
@@ -45,9 +68,15 @@ const Body = () => {
     setCartOpen(!isCartOpen);
   };
 
+  const thankYou = () => {
+    setCartOpen(false);
+    window.alert('Order Successful');
+  }
+
+
+
   return (
     <div className="bg-gray-900 text-white min-h-screen">
-
       {/* Navbar */}
       <Navbar count={count} toggleCart={toggleCart} />
 
@@ -66,14 +95,17 @@ const Body = () => {
                   />
 
                   <span>{item.description}</span>
+                  <span className=' text-red-500 text-center'>${item.price}</span>
 
                   <div className="flex flex-row items-center space-x-3 justify-center">
-                    <button
-                      className="flex justify-center bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-7 rounded focus:outline-none focus:shadow-outline-red active:bg-red-800 transition-all duration-200"
-                      onClick={() => removeFromCart(item)}
-                    >
-                      -
-                    </button>
+                  <button
+                   className={`flex justify-center ${count === 0 ? 'bg-red-300 cursor-not-allowed' : 'bg-red-500 hover:bg-red-700'} text-white font-semibold py-2 px-7 rounded focus:outline-none focus:shadow-outline-red active:bg-red-800 transition-all duration-200`}
+                  onClick={() => removeFromCart(item)}
+                  disabled={count === 0}
+                  style={{ cursor: count === 0 ? 'not-allowed' : 'pointer' }}
+                  >
+                   -
+                  </button>
                     <span>
                       {selectedItems.find((selectedItem) => selectedItem.title === item.title)?.count || 0}
                     </span>
@@ -99,19 +131,22 @@ const Body = () => {
                 <ul>
                   {selectedItems.map((item, index) => (
                     <li key={index}>
-                      {item.title} - {item.count}
+                      {item.title} - {item.count} - ${item.totalPrice.toFixed(2)}
                     </li>
                   ))}
                 </ul>
               ) : (
                 <p>No items in the cart.</p>
               )}
-              <button
-                className="mt-4 bg-red-500 text-white py-2 px-4 rounded"
-                onClick={toggleCart}
-              >
+              <p className="mt-2">Total Bill: ${totalBill.toFixed(2)}</p>
+              <div className=' space-x-2'>
+              <button className="mt-4 bg-red-500 text-white py-2 px-4 rounded" onClick={toggleCart}>
                 Close Cart
               </button>
+              <button className="mt-4 bg-red-500 text-white py-2 px-4 rounded" onClick={thankYou}>
+                Order Now
+              </button>
+              </div>
             </div>
           </div>
         )}
