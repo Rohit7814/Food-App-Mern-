@@ -1,0 +1,23 @@
+/* cart.css */
+
+/* Scroll bar */
+.scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  /* Handle */
+  .scrollbar::-webkit-scrollbar-thumb {
+    background-color: #4a5568;
+    border-radius: 4px;
+  }
+  
+  /* Handle on hover */
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #2d3748;
+  }
+  
+  /* Track */
+  .scrollbar::-webkit-scrollbar-track {
+    background-color: #2d3748;
+  }
+  
