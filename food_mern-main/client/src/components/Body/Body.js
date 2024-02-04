@@ -1,8 +1,9 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import data from '../../../src/data.json';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './NavBar';
 import PaymentComponent from './Payment';
+import './cart.css';
 
 const Body = () => {
   const [count, setCount] = useState(0);
@@ -90,7 +91,7 @@ const Body = () => {
       {/* Navbar */}
       <Navbar count={count} toggleCart={toggleCart} />
 
-      <div className="container mx-auto p-4 mt-16">
+      <div className="container mx-auto p-4 mt-16 mb-16">
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {data.map((item, index) => (
             <li key={index} className="mb-8">
@@ -139,24 +140,58 @@ const Body = () => {
 
         {/* Cart Modal */}
         {isCartOpen && (
-          <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
-            <div className="bg-black p-8 rounded-md">
+          <div className="fixed top-10 left-0 bottom-24 w-full h-full bg-black bg-opacity-50 flex items-center justify-center overflow-scroll">
+            <div className="bg-gray-900 p-6 rounded-md text-white max-h-[80vh] overflow-y-auto scrollbar">
               <h2 className="text-2xl font-semibold mb-4">Cart Items</h2>
+
               {selectedItems.length > 0 ? (
-                <ul>
+                <ul className="divide-y divide-gray-800">
                   {selectedItems.map((item, index) => (
-                    <li key={index}>
-                      {item.title} - {item.count} - ${item.totalPrice.toFixed(2)}
+                    <li key={index} className="py-2">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-4">
+                          <img
+                            src={item.image}
+                            alt={item.title}
+                            className="h-10 w-10 object-cover rounded"
+                          />
+                          <div>
+                            <p className="text-sm font-semibold">{item.title}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <button
+                            className="text-lg text-green-500 focus:outline-none"
+                            onClick={() => addToCart(item)}
+                          >
+                            +
+                          </button>
+                          <button
+                            className={`text-lg ${
+                              item.count > 1 ? 'text-red-500' : 'text-gray-500'
+                            } focus:outline-none`}
+                            onClick={() => removeFromCart(item)}
+                            disabled={item.count <= 1}
+                          >
+                            -
+                          </button>
+                          <p className="text-sm font-semibold">{item.count}</p>
+                          <span className="text-lg">×</span>
+                          <p className="text-sm font-semibold">₹{item.price}</p>
+                        </div>
+                      </div>
                     </li>
                   ))}
                 </ul>
               ) : (
-                <p>No items in the cart.</p>
+                <p className="text-gray-500">No items in the cart.</p>
               )}
-              <p className="mt-2">Total Bill: ${totalBill.toFixed(2)}</p>
-              <div className="space-x-2">
+
+              <p className="mt-4 text-lg font-semibold">Total Bill: ₹{totalBill.toFixed(2)}</p>
+
+              <div className="space-x-2 flex mt-4">
                 <button
-                  className="mt-4 bg-red-500 text-white py-2 px-4 rounded"
+                  className="mt-4 bg-red-500 text-white py-2 px-5 rounded"
                   onClick={toggleCart}
                 >
                   Close Cart
