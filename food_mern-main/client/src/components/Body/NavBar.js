@@ -27,7 +27,7 @@ const Navbar = ({ count, toggleCart }) => {
       </div>
       
       <div className="container mx-auto flex flex-row items-center justify-between lg:space-x-4">
-        <h1 className="text-2xl font-semibold">Here is My Food App</h1>
+        <h1 className="text-2xl font-semibold">FoodWiggy</h1>
         <div className="flex items-center">
           <div className="relative">
             <FaShoppingCart
